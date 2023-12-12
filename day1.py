@@ -10,7 +10,7 @@ def extract_calibration_value(value: str) -> int:
     if not result:
         return 0
     if len(result) == 1:
-        return int(result[0] + result[0])
+        return int(result[0] + result[-1])
     return int(result[0] + result[-1])
 
 
