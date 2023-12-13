@@ -13,10 +13,8 @@ def extract_calibration_value(value: str) -> int:
     if not result:
         return 0
 
-    first = numbers.get(result[0])
-    last = numbers.get(result[-1])
-    first_number = first if first is not None else result[0]
-    last_number = last if last is not None else result[-1]
+    first_number = numbers.get(result[0]) or result[0]
+    last_number = numbers.get(result[-1]) or result[-1]
     return int(first_number + last_number)
 
 
