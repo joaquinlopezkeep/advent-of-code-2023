@@ -6,24 +6,27 @@ numbers = {"one": "1", "two": "2", "three": "3", "four": "4",
            "five": "5", "six": "6", "seven": "7", "eight": "8",  "nine": "9"}
 
 
-def extract_calibration_value(value: str) -> int:
+def extract_numbers_from_string(value: str) -> List[str]:
     pattern = r'(?=([0-9]|one|two|three|four|five|six|seven|eight|nine))'
     result: List[str] = [match.group(1)
                          for match in re.finditer(pattern, value)]
     if not result:
-        return 0
+        return []
 
-    first_number = numbers.get(result[0]) or result[0]
-    last_number = numbers.get(result[-1]) or result[-1]
-    return int(first_number + last_number)
+    return result
 
 
 with open('./day1-input.txt', 'r', encoding='utf-8') as input_file:
     total: int = 0
     while True:
-        line: str = input_file.readline()
-        if not line:
+        text: str = input_file.readline()
+        if not text:
             break
-        total += extract_calibration_value(line)
+        calibration_numbers = extract_numbers_from_string(text)
+        first_number = numbers.get(
+            calibration_numbers[0]) or calibration_numbers[0]
+        last_number = numbers.get(
+            calibration_numbers[-1]) or calibration_numbers[-1]
+        total += int(first_number + last_number)
 
     print("total: ", total)
