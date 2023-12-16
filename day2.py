@@ -24,10 +24,10 @@ def divide_string(value: str) -> list[str]:
 
 def join_string_of_numbers_array(arr: list[str]) -> int:
     num = ""
-    for j, n in enumerate(arr):
+    for j, val in enumerate(arr):
         if val.isdigit():
-            num += n
-    return int()
+            num += val
+    return int(num)
 
 
 def extract_color_from_string(value: str) -> str | None:
