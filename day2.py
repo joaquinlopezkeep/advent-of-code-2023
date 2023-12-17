@@ -64,6 +64,28 @@ def is_game_valid(game: list[str]) -> bool:
     return valid_game
 
 
+def fewest_number_of_cubes_of_each_color(game: list[str]) -> dict[str, int]:
+    fewest_cube_set = {"red": 0, "green": 0, "blue": 0}
+
+    for i, val in enumerate(game):
+        if i == 0:
+            continue
+        key = extract_color_from_string(val)
+
+        current_val = int(join_string_of_numbers_array(extract_numbers_from_string(val)))
+
+        fewest_cube_set[key] = max(fewest_cube_set[key], current_val)
+
+    return fewest_cube_set
+
+
+def power_of_set(set_of_cubes: dict[str, int]) -> int:
+    result = 1
+    for key, val in set_of_cubes.items():
+        result *= int(val)
+    return result
+
+
 with open('./day2-input.txt', "r", encoding="utf-8") as input_file:
     count = 0
 
@@ -77,9 +99,14 @@ with open('./day2-input.txt', "r", encoding="utf-8") as input_file:
 
         game_id: int = join_string_of_numbers_array(extract_numbers_from_string(game[0]))
 
-        valid_game = is_game_valid(game)
+        fewest_set = fewest_number_of_cubes_of_each_color(game)
 
-        if valid_game:
-            count += game_id
+        count += power_of_set(fewest_set)
+
+        # Solution for part one
+        # valid_game = is_game_valid(game)
+        #
+        # if valid_game:
+        #     count += game_id
 
     print("total: ", count)
