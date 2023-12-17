@@ -7,9 +7,15 @@ numbers = {"one": "1", "two": "2", "three": "3", "four": "4",
 
 
 def extract_numbers_from_string(value: str) -> List[str]:
+    # Regex pattern for part one
+    # pattern = r'([0-9])'
+    # result: list[str] = re.findall(pattern, value)
+
+    # Regex pattern for part two
     pattern = r'(?=([0-9]|one|two|three|four|five|six|seven|eight|nine))'
     result: List[str] = [match.group(1)
                          for match in re.finditer(pattern, value)]
+
     if not result:
         return []
 

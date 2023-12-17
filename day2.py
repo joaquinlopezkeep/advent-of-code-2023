@@ -1,5 +1,4 @@
 import re
-
 from day1 import extract_numbers_from_string
 
 max_values = {"red": 12, "green": 13, "blue": 14}
@@ -41,6 +40,30 @@ def extract_color_from_string(value: str) -> str | None:
     return result[0]
 
 
+def is_game_valid(game: list[str]) -> bool:
+    valid_game = True
+    for i, val in enumerate(game):
+        if i == 0:
+            continue
+
+        current_val = join_string_of_numbers_array(extract_numbers_from_string(val))
+
+        if current_val > 14:
+            valid_game = False
+            break
+
+        key = extract_color_from_string(val)
+
+        if key is None:
+            continue
+        max_v = max_values.get(key)
+
+        if current_val > max_v:
+            valid_game = False
+            break
+    return valid_game
+
+
 with open('./day2-input.txt', "r", encoding="utf-8") as input_file:
     count = 0
 
@@ -54,27 +77,7 @@ with open('./day2-input.txt', "r", encoding="utf-8") as input_file:
 
         game_id: int = join_string_of_numbers_array(extract_numbers_from_string(game[0]))
 
-        valid_game = True
-
-        for i, val in enumerate(game):
-            if i == 0:
-                continue
-
-            current_val = join_string_of_numbers_array(extract_numbers_from_string(val))
-
-            if current_val > 14:
-                valid_game = False
-                break
-
-            key = extract_color_from_string(val)
-
-            if key is None:
-                continue
-            max_v = max_values.get(key)
-
-            if current_val > max_v:
-                valid_game = False
-                break
+        valid_game = is_game_valid(game)
 
         if valid_game:
             count += game_id
